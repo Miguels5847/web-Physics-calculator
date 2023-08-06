@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cálculo de las Leyes de Newton</title>
+    <style>
+      body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+    </style>
+
+
+
+
+
+    <script>
+        //calculo de la primera ley
+        function calcularPrimeraLey() {
+            var masa = parseFloat(document.getElementById('masa1').value);
+            var aceleracion = parseFloat(document.getElementById('aceleracion1').value);
+            var resultado = masa * aceleracion;
+            document.getElementById('resultado1').innerHTML = "La fuerza resultante es: " + resultado + " N";
+        }
+     //calculo de la segunda ley
+        function calcularSegundaLey() {
+            var masa = parseFloat(document.getElementById('masa2').value);
+            var aceleracion = parseFloat(document.getElementById('aceleracion2').value);
+            var resultado = masa * aceleracion;
+            document.getElementById('resultado2').innerHTML = "La fuerza resultante es: " + resultado + " N";
+        }
+     //calculo de la primera ley
+        function calcularTerceraLey() {
+            var fuerza1 = parseFloat(document.getElementById('fuerza1').value);
+            var fuerza2 = parseFloat(document.getElementById('fuerza2').value);
+            var resultado = fuerza1 + fuerza2;
+            document.getElementById('resultado3').innerHTML = "La fuerza resultante es: " + resultado + " N";
+        }
+    </script>
+</head>
+
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<body>
+    <div class="container">
+    <div class="block center">
+        <h1 style="text-align:center; color:#4CAF50">Cálculo de las Leyes de Newton</h1>
+    </div>
+
+    
+        <div class="container">
+            <div class="block center">
+            <h1 style="text-align:center; color:#4CAF50">Primera Ley de Newton</h1>
+            <h3 for="masa1" style="color: white;">Masa en Kg:</h3>
+            <input type="text" id="masa1"><br>
+            <h3 for="aceleracion1" style="color: white;">Aceleración en m/s^2:</h3>
+            <input type="text" id="aceleracion1"><br>
+            <br>
+            <button onclick="calcularPrimeraLey()">Calcular</button>
+            <h2 id="resultado1" style="color: white;"></h2>
+        </div>
+
+
+
+
+
+
+        <div class="container">
+            <div class="block center">
+            <h1 style="text-align:center; color:#4CAF50">Segunda Ley de Newton</h1>
+            <h3 for="masa2" style="color: white;">Masa en Kg:</h3>
+            <input type="text" id="masa2"><br>
+            <h3 for="aceleracion2" style="color: white;">Aceleración en m/s^2:</h3>
+            <input type="text" id="aceleracion2"><br>
+            <br>
+            <button onclick="calcularSegundaLey()">Calcular</button>
+            <h2 id="resultado2" style="color: white;"></h2>
+        </div>
+
+
+
+
+        <div class="container">
+            <div class="block center">
+            <h1 style="text-align:center; color:#4CAF50">Tercera Ley de Newton</h1>
+            <h3 for="fuerza1" style="color: white;">Fuerza 1 en N:</h3>
+            <input type="text" id="fuerza1"><br>
+            <h3 for="fuerza2" style="color: white;">Fuerza 2 en N:</h3>
+            <input type="text" id="fuerza2"><br>
+            <br>
+            <button onclick="calcularTerceraLey()">Calcular</button>
+            <h2 id="resultado3" style="color: white;"></h2>
+        </div>
+
+
+
+    </div>
+</body>
+</html>
+
+{% endblock %}

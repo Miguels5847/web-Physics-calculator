@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cálculo de la Energía Cinética</title>
+    <style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+    </style>
+</head>
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<body>
+    <div class="container">
+        <div class="block center">
+            <h1 style="text-align:center; color:#4CAF50">Cálculo de la Energía Cinética</h1>
+            <form>
+                <h3 for="mass" style="color: white;">Masa:</h3>
+                <input type="number" id="mass" name="mass">
+                <h3 for="force" style="color: white;">Fuerza:</h3>
+                <input type="number" id="force" name="force">
+                <h3 for="distance" style="color: white;">Distancia:</h3>
+                <input type="number" id="distance" name="distance">
+                <h3 for="initialVelocity" style="color: white;">Velocidad Inicial:</h3>
+                <input type="number" id="initialVelocity" name="initialVelocity">
+                <br>
+                <br>
+                <button type="button" onclick="calculateResults()">Calcular Resultados</button>
+            </form> 
+            <h1 id="resultTitle" style="color: white;"></h1>
+            <h3 id="accelerationResult" style="color: white;"></h3>  
+            <h3 id="finalVelocityResult" style="color: white;"></h3>  
+            <h3 id="kineticEnergyResult" style="color: white;"></h3>        
+        </div>
+    </div>
+
+    <script>
+        //calcula los resultados
+        function calculateResults() {
+            var mass = document.getElementById("mass").value;
+            var force = document.getElementById("force").value;
+            var distance = document.getElementById("distance").value;
+
+            var acceleration = force / mass;
+
+            var initialVelocity = document.getElementById("initialVelocity").value;
+
+            var finalVelocitySquared = initialVelocity * initialVelocity + 2 * acceleration * distance;
+
+            var finalVelocity = Math.sqrt(finalVelocitySquared);
+
+            var kineticEnergy = 0.5 * mass * finalVelocity * finalVelocity - 0.5 * mass * initialVelocity * initialVelocity;
+
+            document.getElementById("resultTitle").innerHTML = "Resultados";
+            document.getElementById("accelerationResult").innerHTML = "La Aceleración es " + acceleration + " m/s²";
+            document.getElementById("finalVelocityResult").innerHTML = "La Velocidad Final es " + finalVelocity + " m/s";
+            document.getElementById("kineticEnergyResult").innerHTML = "La Energía Cinética es " + kineticEnergy + " J";
+        }
+    </script>
+
+</body>
+</html>
+
+{% endblock %}

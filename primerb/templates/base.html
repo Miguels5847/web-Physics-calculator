@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color: black;">Ejercicios bloque 1</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+    
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+    
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    
+        /* Set the text color to black for all titles */
+        .dropdown-content a {
+            display: block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/" style="color: #4CAF50;">Home</a>
+            </li>
+            
+            {% if user.is_authenticated %}
+            <li class="dropdown">
+                <a href="/EBloque1" style="color: #4CAF50;">Ejercicios Bloque 1</a>
+                <div class="dropdown-content">
+                    <a href="/MRU" style="color: white;">Movimiento Rectilíneo Uniforme</a>
+                    <a href="/MRUV" style="color: white;">Movimiento Rectilíneo Uniformemente Variado</a>
+                    <a href="/UNI" style="color: white;">Conversion de Unidades</a>
+                    <a href="/cai" style="color: white;">Caida de Cuerpos</a>
+                    <a href="/ecuav" style="color: white;">Ecuaciones de Lanzamiento Vertical</a>
+                    <a href="/ecuah" style="color: white;">Ecuaciones de Lanzamiento Horizontal</a>
+                    <a href="/sum" style="color: white;">Suma de Vectores</a>
+                </div>
+            </li>
+            <li> 
+                <li class="dropdown">
+                    <a href="/ejercicios2" style="color: #4CAF50;">Ejercicios Bloque 2</a>
+                    <div class="dropdown-content">
+                        <a href="/new" style="color: white;">Newton</a>
+                    </div>
+                </li>
+            </li>
+            <li>
+                <li class="dropdown">
+                    <a href="/elbloque3" style="color: #4CAF50;">Ejercicios Bloque 3</a>
+                    <div class="dropdown-content">
+                        <a href="/energia" style="color: white;">Energia</a>
+                        <a href="/trabajo" style="color: white;">Trabajo</a>
+                    </div>
+                </li>
+            </li>
+
+            <li>
+                <a href="/logout" style="color: #4CAF50;">logout</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/signup" style="color: #4CAF50;">sign up</a>
+            </li>
+            <li>
+                <a href="/signin" style="color: #4CAF50;">sign in</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+
+
+
+
+
+<div class="container">
+    <div class="block">
+    <title style="color: #4CAF50;">Ecuaciones de Lanzamiento de Proyectiles</title>
+    <script>
+        var resultadoHorizontal = {}; // Objeto para almacenar los resultados del lanzamiento horizontal
+        var resultadoInclinado = {}; // Objeto para almacenar los resultados del lanzamiento inclinado
+       //muestra el resultado y lo actualiza el resultado
+        function actualizarResultado(resultado) {
+            document.getElementById("resultado_vx_horizontal").innerHTML = resultado.resultadoVx;
+            document.getElementById("resultado_vy_horizontal").innerHTML = resultado.resultadoVy;
+            document.getElementById("resultado_magnitud_velocidad").innerHTML = resultado.resultadoMagnitudVelocidad;
+            document.getElementById("resultado_direccion_velocidad").innerHTML = resultado.direccionVelocidad;
+            document.getElementById("subtitulo_desplazamiento").innerHTML = resultado.subtituloDesplazamiento;
+            document.getElementById("desplazamiento_horizontal").innerHTML = resultado.desplazamientoHorizontal;
+            document.getElementById("desplazamiento_vertical").innerHTML = resultado.desplazamientoVertical;
+            document.getElementById("desplazamiento_total").innerHTML = resultado.desplazamientoTotal;
+            document.getElementById("alcance").innerHTML = resultado.alcance;
+            document.getElementById("subtitulo_tiempo_vuelo").innerHTML = resultado.subtituloTiempoVuelo;
+            document.getElementById("subtitulo_direccion_desplazamiento").innerHTML = resultado.subtituloDireccionDesplazamiento;
+            document.getElementById("subtitulo_altura_tiempo").innerHTML = resultado.subtituloAlturaTiempo;
+            document.getElementById("altura_tiempo").innerHTML = resultado.alturaTiempo;
+        }
+             //Funcion que sirve para el lanzamiento Horizontal y calculos
+        function lanzamientoHorizontal() {
+            var v0 = parseFloat(document.getElementById("v0_horizontal").value);
+            var h = parseFloat(document.getElementById("altura_horizontal").value);
+            var g = 9.8; // Aceleración debido a la gravedad
+
+            var vx = v0;
+            var t = Math.sqrt(2 * h / g);
+            var vy = g * t;
+            var magnitudVelocidad = Math.sqrt(vx * vx + vy * vy).toFixed(2);
+            var desplazamientoHorizontal = v0 * t;
+            var desplazamientoVertical = (g * t * t) / 2;
+            var desplazamientoTotal = Math.sqrt(desplazamientoHorizontal * desplazamientoHorizontal + desplazamientoVertical * desplazamientoVertical);
+            var alcance = vx * t;
+            var alturaTiempo = (v0 * t) - (0.5 * g * t * t);
+           //Resultados de los calculos
+            resultadoHorizontal = {
+                resultadoVx: "Vx (Velocidad en el eje X): " + vx.toFixed(2) + " m/s",
+                resultadoVy: "Vy (Velocidad en el eje Y): " + vy.toFixed(2) + " m/s",
+                resultadoMagnitudVelocidad: "Magnitud de Velocidad: " + magnitudVelocidad + " m/s",
+                direccionVelocidad: "Dirección de la velocidad: " + (Math.atan(vy / vx) * (180 / Math.PI)).toFixed(2) + " grados",
+                subtituloDesplazamiento: "Desplazamiento:",
+                desplazamientoHorizontal: "Horizontal: " + desplazamientoHorizontal.toFixed(2) + " metros",
+                desplazamientoVertical: "Vertical: " + desplazamientoVertical.toFixed(2) + " metros",
+                desplazamientoTotal: "Desplazamiento Total: " + desplazamientoTotal.toFixed(2) + " metros",
+                alcance: "Alcance: " + alcance.toFixed(2) + " metros",
+                subtituloTiempoVuelo: "Tiempo de Vuelo: " + t.toFixed(2) + " segundos",
+                subtituloDireccionDesplazamiento: "Dirección (desplazamiento): " + (Math.atan(desplazamientoVertical / desplazamientoHorizontal) * (180 / Math.PI)).toFixed(2) + " grados",
+                subtituloAlturaTiempo: "Altura en función del tiempo:" + alturaTiempo.toFixed(2) + " metros",
+               
+            };
+           
+            actualizarResultado(resultadoHorizontal);
+
+            // Reiniciar los campos de Lanzamiento Inclinado
+            document.getElementById("v0_inclinado").value = "";
+            document.getElementById("angulo_inclinado").value = "";
+        }
+    </script>
+
+</head>
+
+
+
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<body>
+    <div class="block center">
+    <h1 style="text-align:center; color:#4CAF50">Ecuaciones de Lanzamiento de Proyectiles</h1>
+    <h2 style="color: #4CAF50;">Lanzamiento Horizontal</h2>
+    <h3 for="v0_horizontal" style="color: white;">Velocidad Inicial (Vo) en m/s:</h3>
+    <input type="number" id="v0_horizontal">
+    <h3 for="altura_horizontal" style="color: white;">Altura (h) en m:</h3>
+    <input type="number" id="altura_horizontal">
+    <br>
+    <br>
+    <button onclick="lanzamientoHorizontal()">Calcular Velocidades (X, Y)</button>
+    <h2 style="color: white;">Resultados:</h2>
+    <h1 style="text-align:center; color:#4CAF50">Velocidad:</h1>
+    <h2 id="resultado_vx_horizontal" style="color: aliceblue;"></h2>
+    <h2 id="resultado_vy_horizontal" style="color: aliceblue;"></h2>
+    <h2 id="resultado_magnitud_velocidad" style="color: aliceblue;"></h2>
+    <h2 id="resultado_direccion_velocidad" style="color: aliceblue;"></h2>
+    <h2 id="subtitulo_desplazamiento" style="color: #4CAF50;"></h1>
+    <h2 id="desplazamiento_horizontal" style="color: aliceblue;"></h2>
+    <h2 id="desplazamiento_vertical" style="color: aliceblue;"></h2>
+    <h2 id="desplazamiento_total" style="color: aliceblue;"></h2>
+    <h2 id="alcance" style="color: aliceblue;"></h2>
+    <h2 id="subtitulo_tiempo_vuelo" style="color: aliceblue;"></h2>
+    <h2 id="subtitulo_direccion_desplazamiento" style="color: aliceblue;"></h2>
+    <h2 id="subtitulo_altura_tiempo" style="color: aliceblue;"></h2>
+    
+</div>
+{% endblock %}

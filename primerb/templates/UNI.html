@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+ 
+
+ <style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style> 
+<div class="container">
+    <div class="block center">
+    <h1 style="text-align:center; color:#4CAF50">Conversiones de unidades</h1>
+    <h3 for="conversionValue" style="color: white;">Valor:</h3>
+    <input type="number" id="conversionValue" placeholder="Ingrese el valor" step="0.01">
+    <br>
+    <h3 for="conversionSelect" style="color: white;">Convertir de:</h3>
+    <select id="conversionSelect">
+        <option value="metros">Metros</option>
+        <option value="kilometros">Kilómetros</option>
+        <option value="centimetros">Centímetros</option>
+        <option value="pies">Pies</option>
+    </select>
+    <br>
+    <h3 for="conversionTarget" style="color: white;">Convertir a:</h3>
+    <select id="conversionTarget">
+        <option value="metros">Metros</option>
+        <option value="kilometros">Kilómetros</option>
+        <option value="centimetros">Centímetros</option>
+        <option value="pies">Pies</option>
+    </select>
+    <br>
+    <br>
+    <button onclick="convertUnits()">Convertir</button>
+    <h1 style="text-align:center; color:#4CAF50">Resultado de la conversión:</h1>
+    <h3 style="text-align:center; color:white" id="conversionResult"></h3>
+</div>
+
+<script>
+    function convertUnits() {
+        //obtener datos ingresados
+        var conversionValue = parseFloat(document.getElementById("conversionValue").value);
+        var conversionSelect = document.getElementById("conversionSelect").value;
+        var conversionTarget = document.getElementById("conversionTarget").value;
+        var result = document.getElementById("conversionResult");
+        //un condicional el cual nos ayuda a evitar conversiones de mismos datos
+        if (!isNaN(conversionValue)) {
+            var convertedValue;
+            var conversionText;
+
+            if (conversionSelect === conversionTarget) {
+                result.innerHTML = "Las unidades de conversión seleccionadas son iguales. Por favor seleccione unidades diferentes.";
+                return;
+            }
+//conversiones
+            if (conversionSelect === "metros") {
+                if (conversionTarget === "kilometros") {
+                    convertedValue = conversionValue / 1000;
+                    conversionText = "kilómetros";
+                } else if (conversionTarget === "centimetros") {
+                    convertedValue = conversionValue * 100;
+                    conversionText = "centímetros";
+                } else if (conversionTarget === "pies") {
+                    convertedValue = conversionValue * 3.281;
+                    conversionText = "pies";
+                }
+            } else if (conversionSelect === "kilometros") {
+                if (conversionTarget === "metros") {
+                    convertedValue = conversionValue * 1000;
+                    conversionText = "metros";
+                } else if (conversionTarget === "centimetros") {
+                    convertedValue = conversionValue * 100000;
+                    conversionText = "centímetros";
+                } else if (conversionTarget === "pies") {
+                    convertedValue = conversionValue * 3281;
+                    conversionText = "pies";
+                }
+            } else if (conversionSelect === "centimetros") {
+                if (conversionTarget === "metros") {
+                    convertedValue = conversionValue / 100;
+                    conversionText = "metros";
+                } else if (conversionTarget === "kilometros") {
+                    convertedValue = conversionValue / 100000;
+                    conversionText = "kilómetros";
+                } else if (conversionTarget === "pies") {
+                    convertedValue = conversionValue / 30.48;
+                    conversionText = "pies";
+                }
+            } else if (conversionSelect === "pies") {
+                if (conversionTarget === "metros") {
+                    convertedValue = conversionValue / 3.281;
+                    conversionText = "metros";
+                } else if (conversionTarget === "kilometros") {
+                    convertedValue = conversionValue / 3281;
+                    conversionText = "kilómetros";
+                } else if (conversionTarget === "centimetros") {
+                    convertedValue = conversionValue * 30.48;
+                    conversionText = "centímetros";
+                }
+            }
+
+            result.innerHTML = "Son " + convertedValue.toFixed(2) + " " + conversionText;
+
+            document.getElementById("resultConversion").style.display = "block";
+        } else {
+            result.innerHTML = "Por favor ingrese un valor numérico para la conversión.";
+        }
+
+        // Limpiar el campo de valor ingresado
+        document.getElementById("conversionValue").value = "";
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: black;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .block {
+        margin-bottom: 40px;
+        background-color: #333;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        text-align: left;
+    }
+
+    .block h1 {
+        font-size: 28px;
+        color: #8ebf81;
+        margin-bottom: 20px;
+    }
+
+    .block h2 {
+        font-size: 20px;
+        color: #888888;
+        margin-bottom: 10px;
+    }
+
+    .block p {
+        font-size: 16px;
+        color: #cccccc;
+        line-height: 1.5;
+    }
+</style>
+<div class="container">
+    <div class="block center">
+        <h1 style="text-align:center; color:#4CAF50">Bloque 1: Cinemática: movimiento en 1 y 2 dimensiones</h1>
+        <h3 style="color: white;">La cinemática es una rama de la mecánica que se enfoca en el estudio del movimiento de los objetos sin considerar las causas que lo generan.</h3>
+        <h3 style="color: white;">Se ocupa de describir y analizar el desplazamiento, la velocidad y la aceleración de los objetos en una o dos dimensiones.</h3>
+        <h3 style="color: white;">En una dimensión, el movimiento se realiza a lo largo de una línea recta, mientras que en dos dimensiones implica un movimiento en un plano, considerando tanto la componente horizontal como la vertical.</h3>
+        <h3 style="color: white;">La cinemática es fundamental para comprender el comportamiento del movimiento en el mundo físico.</h3>
+    </div>
+
+{% endblock %}

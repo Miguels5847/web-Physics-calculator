@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculo de Trabajo</title>
+<style>
+
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+
+
+
+<script>
+  //Muestra la entrada de datos
+  function showWorkInputs() {
+    document.getElementById("work-inputs").style.display = "block";
+  }
+  //Muestra la entrada de datos  
+  function showAngleWorkInputs() {
+    document.getElementById("angle-work-inputs").style.display = "block";
+  }
+    //Calcula el trabajo con la fuerza y distancia
+  function calculateWork() {
+      var force = document.getElementById("force").value;
+      var distance = document.getElementById("distance").value;
+      var work = force * distance;
+      document.getElementById("work-result").innerHTML = "Trabajo: " + work + " J";
+    }
+    //Calcula el trabajo con el angulo
+    function calculateAngleWork() {
+      var force = document.getElementById("angle-force").value;
+      var distance = document.getElementById("angle-distance").value;
+      var angle = document.getElementById("angle").value;
+      var angleWork = (force * distance * Math.cos(angle * Math.PI / 180)).toFixed(2);
+      document.getElementById("angle-work-result").innerHTML = "Trabajo: " + angleWork + " J";
+    }
+  </script>
+</head>
+<style>
+  /* Estilo para centrar horizontalmente */
+  .center {
+    margin: 0 auto;
+    text-align: center;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="block  center">
+      <h1 style="text-align:center; color:#4CAF50">Calculadora de Trabajo</h1>
+      <h3 for="force" style="color: white;">Fuerza en N :</h3>
+      <input type="number" id="force" name="force" ><br><br>
+      <h3 for="distance" style="color: white;">Distancia en m:</h3>
+      <input type="number" id="distance" name="distance"><br><br>
+      <button onclick="calculateWork()">Calcular</button>
+      <h3 id="work-result" style="color: white;"></h3> <!-- Result display for Calculadora de Trabajo -->
+    </div>
+  </div>
+
+
+
+</head>
+<style>
+  /* Estilo para centrar horizontalmente */
+  .center {
+    margin: 0 auto;
+    text-align: center;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="block center">
+      <h1 style="text-align:center; color:#4CAF50">Calculadora de Trabajo con Ángulo</h1>
+      <h3 for="angle-force" style="color: white;">Fuerza en N:</h3>
+      <input type="number" id="angle-force" name="angle-force"><br><br>
+      <h3 for="angle-distance" style="color: white;">Distancia en m:</h3>
+      <input type="number" id="angle-distance" name="angle-distance"><br><br>
+      <h3 for="angle" style="color: white;">Ángulo en grados:</h3>
+      <input type="number" id="angle" name="angle"><br><br>
+      <button onclick="calculateAngleWork()">Calcular</button>
+      <h3 id="angle-work-result" style="color: white;"></h3> <!-- Result display for Calculadora de Trabajo con Ángulo -->
+    </div>
+  </div>
+</body>
+</html>
+{% endblock %}

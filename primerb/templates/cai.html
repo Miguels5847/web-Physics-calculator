@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<div class="container">
+    <div class="block center">
+    <title style="color: #4CAF50;">Cálculo de la caída de cuerpos</title>
+
+    <script>
+        
+        //Se obtiene el elemento
+        function calcularCaida() {
+        var gravedad = parseFloat(document.getElementById('gravedad').value);
+        var tiempo =parseFloat(document.getElementById('tiempo').value);
+        var altura = parseFloat(document.getElementById('altura').value);
+        var velocidadInicial = parseFloat(document.getElementById('velocidad-inicial').value);
+        var velocidadFinal = parseFloat(document.getElementById('velocidad-final').value);
+
+        
+
+      
+      
+
+        // Calcular la caída de cuerpos
+        var distanciaRecorrida = (velocidadFinal * tiempo) + (0.5 * gravedad * tiempo * tiempo);
+        var alturaFinal = altura - (velocidadInicial * tiempo) - (0.5 * gravedad * tiempo * tiempo);
+
+        // Mostrar los resultados
+        document.getElementById('resultado-distancia').innerHTML = "La distancia recorrida es: " + distanciaRecorrida.toFixed(2) + " metros";
+        document.getElementById('resultado-altura-final').innerHTML = "La altura final es: " + alturaFinal.toFixed(2) + " metros";
+        document.getElementById('resultado-tiempo').innerHTML = "La tiempo  es: " + tiempo.toFixed(2) + " segundos";
+
+
+       //variable seleccionada para que se muestre el resultado
+        if (selectedValue === "tiempo") {
+            document.getElementById('resultado-tiempo').innerHTML = "El tiempo es: " + tiempo.toFixed(2) + " segundos";
+        } else {
+            document.getElementById('resultado-tiempo').innerHTML = "";
+        }
+
+
+
+        if (selectedValue === "altura2") {
+            document.getElementById('resultado-altura2').innerHTML = "La altura es: " + altura.toFixed(2) + " metros";
+        } else {
+            document.getElementById('resultado-altura2').innerHTML = "";
+        }
+    }
+</script>
+</head>
+<body>
+    <h1 style="text-align:center; color:#4CAF50">Cálculo de la caída de cuerpos</h1>
+
+
+    <h3 for="gravedad" style="color: white;">Gravedad:</h3>
+    <input type="number" id="gravedad"><br>
+
+    <h3 for="tiempo" style="color: white;">Tiempo en s:</h3>
+    <input type="number" id="tiempo"><br>
+
+    <h3 for="altura" style="color: white;">Altura en m:</h3>
+    <input type="number" id="altura"><br>
+
+    <h3 for="velocidad-inicial" style="color: white;">Velocidad Inicial en m/s:</h3>
+    <input type="number" id="velocidad-inicial"><br>
+
+    <h3 for="velocidad-final" style="color: white;">Velocidad Final en m/s:</h3>
+    <input type="number" id="velocidad-final"><br>
+    <br>
+    <button onclick="calcularCaida()">Calcular</button>
+
+    <h1 style="text-align:center; color:#4CAF50">Resultados:</h1>
+    <h3 id="resultado-distancia" style="color: white;"></h3>
+    <h3 id="resultado-altura-final" style="color: white;"></h3>
+
+</div>
+{% endblock %}

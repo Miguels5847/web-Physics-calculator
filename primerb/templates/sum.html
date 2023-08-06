@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+
+
+<div class="container">
+    <div class="block">
+     
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<body>
+    <div class="block center">
+
+    <h1 style="text-align:center; color:#4CAF50">Suma de Vectores</h1>
+    <div id="vectoresContainer">
+        <div class="mensaje">
+            <label for="vectorInput1" style="color: white;">Vector 1:</label>
+            <input type="text" class="vectorInput" placeholder="Ejemplo: 1,2" style="color: black;">
+        </div>
+    </div>
+    <button onclick="agregarVector()">Agregar Vector</button>
+    <button onclick="removerVector()">Quitar Vector</button>
+    <button onclick="calcularSuma()">Calcular</button>
+    <p id="errorMessage"></p>
+    <div id="plot"></div>
+    <h2 id="resultado" style="color: white;"></h2>
+
+    <script>
+        var numVectores = 1;
+           //hace las sumas de los vectores
+        function sumar_vectores(vectores) {
+            var suma = [0, 0];
+            for (var i = 0; i < vectores.length; i++) {
+                suma[0] += vectores[i][0];
+                suma[1] += vectores[i][1];
+            }
+            return suma;
+        }
+         //agrega los vectores
+        function agregarVector() {
+    var vectoresContainer = document.getElementById('vectoresContainer');
+    var div = document.createElement('div');
+    div.className = 'mensaje';
+    div.innerHTML = '<label for="vectorInput' + (numVectores + 1) + '" style="color: white;">Vector ' + (numVectores + 1) + ':</label>' +
+        '<input type="text" class="vectorInput" id="vectorInput' + (numVectores + 1) + '" placeholder="Ejemplo: 1,2">';
+    vectoresContainer.appendChild(div);
+    numVectores++;
+}
+
+         //elimina los vectores necesarios 
+        function removerVector() {
+            if (numVectores > 1) {
+                var vectoresContainer = document.getElementById('vectoresContainer');
+                vectoresContainer.removeChild(vectoresContainer.lastChild);
+                numVectores--;
+            }
+        }
+        //obtiene el valor de los vectores
+        function obtenerVectores() {
+            var vectorInputs = document.getElementsByClassName('vectorInput');
+            var vectores = [];
+
+            for (var i = 0; i < vectorInputs.length; i++) {
+                var vectorString = vectorInputs[i].value.trim();
+                if (vectorString !== '') {
+                    var coordenadas = vectorString.split(',');
+                    if (coordenadas.length === 2) {
+                        var x = parseFloat(coordenadas[0].trim());
+                        var y = parseFloat(coordenadas[1].trim());
+                        if (!isNaN(x) && !isNaN(y)) {
+                            vectores.push([x, y]);
+                        } else {
+                            mostrarError('Los valores deben ser numéricos.');
+                            return null;
+                        }
+                    } else {
+                        mostrarError('Los vectores deben tener dos coordenadas separadas por coma.');
+                        return null;
+                    }
+                }
+            }
+
+            return vectores;
+        }
+        //permite calcular la suma
+        function calcularSuma() {
+            var vectores = obtenerVectores();
+
+            if (vectores !== null && vectores.length > 0) {
+                var suma = sumar_vectores(vectores);
+                mostrarError('');
+                graficar_vectores(vectores, suma);
+                mostrarResultado('La suma de los vectores es: [' + suma[0] + ', ' + suma[1] + ']');
+            }
+        }
+           //permite obtener los colores de los vectores en la grafica
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+          //se grafica los vectores con la plot.ly
+        function graficar_vectores(vectores, suma) {
+            var plotDiv = document.getElementById('plot');
+
+            var data = [];
+            var origen = [0, 0];
+            for (var i = 0; i < vectores.length; i++) {
+                var vector = vectores[i];
+                var color = getRandomColor();
+                data.push({
+                    x: [origen[0], origen[0] + vector[0]],
+                    y: [origen[1], origen[1] + vector[1]],
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: color, arrowhead: '7' },
+                    name: 'Vector ' + (i + 1)
+                });
+                origen[0] += vector[0];
+                origen[1] += vector[1];
+            }
+
+            data.push({
+                x: [0, suma[0]],
+                y: [0, suma[1]],
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: 'red', arrowhead: '7' },
+                name: 'Suma de Vectores'
+            });
+
+            var layout = {
+                title: 'Suma de Vectores',
+                xaxis: { title: 'Eje X', range: [-10, 10] },
+                yaxis: { title: 'Eje Y', range: [-10, 10] },
+                hovermode: 'closest',
+                showlegend: true
+            };
+
+            Plotly.newPlot(plotDiv, data, layout);
+        }
+
+        function mostrarError(mensaje) {
+            var errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerHTML = mensaje;
+        }
+
+        function mostrarResultado(resultado) {
+            var resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
+{% endblock %}
+

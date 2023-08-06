@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+
+
+
+
+
+
+
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<div class="container">
+    <div class="block center">
+    <h1 style="text-align:center; color:#4CAF50">Movimiento Rectilíneo Uniformemente Variado (MRUV)</h1>
+    <h1 for="variableSelect2" style="color: white;">Variable a calcular:</h1>
+    <select id="variableSelect2" onchange="handleVariableSelectMRUV()">
+        <option value="velocidadFinal">Velocidad final en m/s:</option>
+        <option value="velocidadInicial">Velocidad inicial en m/s:</option>
+        <option value="tiempo">Tiempo en s:</option>
+        <option value="distancia">Distancia en m:</option>
+    </select>
+    <h3 for="acceleration"  style="color: white;">Aceleración en m/s^2:</h3>
+    <input type="number" id="acceleration" placeholder="Ingrese la aceleración" step="0.01">
+    <h3 for="initialVelocity2"  style="color: white;">Velocidad inicial en m/s:</h3>
+    <input type="number" id="initialVelocity2" placeholder="Ingrese la velocidad inicial" step="0.01">
+    <h3 for="time2"  style="color: white;">Tiempo en s:</h3>
+    <input type="number" id="time2" placeholder="Ingrese el tiempo" step="0.01">
+    <h3 for="distance2"  style="color: white;">Distancia en m:</h3>
+    <input type="number" id="distance2" placeholder="Ingrese la distancia" step="0.01">
+    <br>
+    <br>
+    <button onclick="calculateMRUV()">Calcular</button>
+    <h1 style="color: white;">Resultado MRUV:</h1>
+    <h1 id="resultMRUV" style="color: black;"></h1>
+</div>
+<script>
+    //Permite seleccionar la variable 
+function handleVariableSelectMRUV() {
+    var variableSelect = document.getElementById("variableSelect2");
+    var initialVelocityInput = document.getElementById("initialVelocity2");
+    var timeInput = document.getElementById("time2");
+    var distanceInput = document.getElementById("distance2");
+    var result = document.getElementById("resultMRUV");
+
+    initialVelocityInput.disabled = false;
+        timeInput.disabled = false;
+        distanceInput.disabled = false;
+
+        initialVelocityInput.value = "";
+        timeInput.value = "";
+        distanceInput.value = "";
+        result.innerHTML = "";
+
+    if (variableSelect.value === "velocidadFinal" || variableSelect.value === "distancia") {
+        initialVelocityInput.disabled = false;
+        timeInput.disabled = false;
+        distanceInput.disabled = variableSelect.value === "velocidadFinal";
+        result.innerHTML = "";
+    } else if (variableSelect.value === "velocidadInicial") {
+        initialVelocityInput.disabled = true;
+        timeInput.disabled = false;
+        distanceInput.disabled = false;
+        result.innerHTML = "";
+    } else if (variableSelect.value === "tiempo") {
+        initialVelocityInput.disabled = false;
+        timeInput.disabled = true;
+        distanceInput.disabled = false;
+        result.innerHTML = "";
+    }
+
+    if (variableSelect.value === "distancia") {
+        distanceInput.value = ""; // Borrar el valor del cuadro de texto de distancia
+        distanceInput.disabled = true;
+    } else {
+        distanceInput.disabled = false;
+    }
+}
+
+    function calculateMRUV() {
+        //permite obtener el valor
+        var variableSelect = document.getElementById("variableSelect2").value;
+        var acceleration = parseFloat(document.getElementById("acceleration").value);
+        var initialVelocity = parseFloat(document.getElementById("initialVelocity2").value);
+        var time = parseFloat(document.getElementById("time2").value);
+        var distance = parseFloat(document.getElementById("distance2").value);
+        var result = document.getElementById("resultMRUV");
+
+        if (!isNaN(acceleration)) {
+            if (variableSelect === "distancia") {
+                if (!isNaN(distance)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                                // Calcula la distancia utilizando la fórmula del MRUV: d = vi * t + (1/2) * a * t^2
+                                distance = initialVelocity * time + 0.5 * acceleration * Math.pow(time, 2);
+                result.innerHTML = "La distancia calculada es: " + distance.toFixed(2) + " metros.";
+                document.getElementById("distance2").disabled = true;
+
+
+            } else if (variableSelect === "velocidadFinal") {
+                // Calculate the final velocity using the MRUV formula: vf = vi + a * t
+                if (isNaN(initialVelocity) || isNaN(time)) {
+                    result.innerHTML = "Por favor ingrese la velocidad inicial y el tiempo para calcular la velocidad final.";
+                    return;
+                }
+                var finalVelocity = initialVelocity + acceleration * time;
+                result.innerHTML = "La velocidad final calculada es: " + finalVelocity.toFixed(2) + " m/s.";
+            } else if (variableSelect === "velocidadInicial") {
+                if (!isNaN(initialVelocity)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                // Calcula la velocidad inicial utilizando la fórmula del MRUV: vi = vf - a * t
+                initialVelocity = distance - acceleration * time;
+                result.innerHTML = "La velocidad inicial calculada es: " + initialVelocity.toFixed(2) + " m/s.";
+                document.getElementById("initialVelocity2").disabled = true;
+            } else if (variableSelect === "tiempo") {
+                if (!isNaN(time)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                // Calcula el tiempo utilizando la fórmula del MRUV: t = (vf - vi) / a
+                time = (distance - initialVelocity) / acceleration;
+                result.innerHTML = "El tiempo calculado es: " + time.toFixed(2) + " segundos.";
+                document.getElementById("time2").disabled = true;
+            }
+            document.getElementById("result2").style.display = "block";
+        } else {
+            result.innerHTML = "Por favor ingrese un valor numérico para la aceleración.";
+        }
+
+        // Borrar los datos ingresados
+        document.getElementById("acceleration").value = "";
+        document.getElementById("initialVelocity2").value = "";
+        document.getElementById("time2").value = "";
+        document.getElementById("distance2").value = "";
+    }
+</script>
+{% endblock %}

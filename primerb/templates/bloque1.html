@@ -1,0 +1,721 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="post" id="bloque1">
+    <h1 id="Bloque1">Bloque 1</h1>
+    <p>Descripción de mi post</p>
+    <img src="img/fisica3.jpg" width="200">
+    <p>Texto del artículo que hay aquí y es texto de prueba caros feliz</p>
+    <h2>Cinemática: Movimiento en 1 y 2 dimensiones</h2>
+    <p>En este bloque puedes resolver ejercicios de cinemática en una y dos dimensiones.</p>
+    <div id="inputSection1">
+        <h2>Movimiento Rectilíneo Uniforme</h2>
+        <label for="variableSelect">Variable a calcular:</label>
+        <select id="variableSelect" onchange="handleVariableSelect()">
+            <option value="velocidad">Velocidad</option>
+            <option value="tiempo">Tiempo</option>
+            <option value="distancia">Distancia</option>
+        </select>
+        <br>
+        <label for="initialVelocity">Velocidad inicial:</label>
+        <input type="number" id="initialVelocity" placeholder="Ingrese la velocidad inicial" step="0.01">
+        <br>
+        <label for="time">Tiempo:</label>
+        <input type="number" id="time" placeholder="Ingrese el tiempo" step="0.01">
+        <br>
+        <label for="distance">Distancia:</label>
+        <input type="number" id="distance" placeholder="Ingrese la distancia" step="0.01">
+        <br>
+        <button onclick="calculateMotion()">Calcular</button>
+    </div>
+    <div id="result1" style="display: none;">
+        <h2>Resultado:</h2>
+        <p id="result"></p>
+    </div>
+</article>
+
+<script>
+    function handleVariableSelect() {
+        var variableSelect = document.getElementById("variableSelect");
+        var timeInput = document.getElementById("time");
+        var distanceInput = document.getElementById("distance");
+        var velocityInput = document.getElementById("initialVelocity");
+
+        if (variableSelect.value === "tiempo") {
+            timeInput.disabled = true;
+            distanceInput.disabled = false;
+            velocityInput.disabled = false;
+        } else if (variableSelect.value === "distancia") {
+            timeInput.disabled = false;
+            distanceInput.disabled = true;
+            velocityInput.disabled = false;
+        } else if (variableSelect.value === "velocidad") {
+            timeInput.disabled = false;
+            distanceInput.disabled = false;
+            velocityInput.disabled = true;
+        }
+    }
+
+    function calculateMotion() {
+        // Aquí se realiza el cálculo de acuerdo a las variables seleccionadas y se muestra el resultado
+    }
+</script>
+
+<script>
+function calculateMotion() {
+    var variableSelect = document.getElementById("variableSelect").value;
+    var initialVelocity = parseFloat(document.getElementById("initialVelocity").value);
+    var time = parseFloat(document.getElementById("time").value);
+    var distance = parseFloat(document.getElementById("distance").value);
+    var result = document.getElementById("result");
+
+    if (variableSelect === "tiempo") {
+        time = distance / initialVelocity;
+        result.innerHTML = "El tiempo calculado es: " + time.toFixed(2) + " segundos.";
+    } else if (variableSelect === "distancia") {
+        distance = initialVelocity * time;
+        result.innerHTML = "La distancia calculada es: " + distance.toFixed(2) + " metros.";
+    } else if (variableSelect === "velocidad") {
+        initialVelocity = distance / time;
+        result.innerHTML = "La velocidad calculada es: " + initialVelocity.toFixed(2) + " m/s.";
+    }
+
+    document.getElementById("result1").style.display = "block";
+}
+
+</script>
+
+<script>
+    function clearInputs() {
+    document.getElementById("initialVelocity").value = "";
+    document.getElementById("time").value = "";
+    document.getElementById("distance").value = "";
+}
+
+function handleVariableSelect() {
+    var variableSelect = document.getElementById("variableSelect");
+    var timeInput = document.getElementById("time");
+    var distanceInput = document.getElementById("distance");
+    var velocityInput = document.getElementById("initialVelocity");
+
+    if (variableSelect.value === "tiempo") {
+        timeInput.disabled = true;
+        distanceInput.disabled = false;
+        velocityInput.disabled = false;
+    } else if (variableSelect.value === "distancia") {
+        timeInput.disabled = false;
+        distanceInput.disabled = true;
+        velocityInput.disabled = false;
+    } else if (variableSelect.value === "velocidad") {
+        timeInput.disabled = false;
+        distanceInput.disabled = false;
+        velocityInput.disabled = true;
+    }
+
+    clearInputs();
+}
+
+</script>
+#
+<div id="inputSection2">
+    <h2>Movimiento Rectilíneo Uniformemente Variado (MRUV)</h2>
+    <label for="variableSelect2">Variable a calcular:</label>
+    <select id="variableSelect2" onchange="handleVariableSelectMRUV()">
+        <option value="velocidadFinal">Velocidad final</option>
+        <option value="velocidadInicial">Velocidad inicial</option>
+        <option value="tiempo">Tiempo</option>
+        <option value="distancia">Distancia</option>
+    </select>
+    <br>
+    <label for="acceleration">Aceleración en m/s^2:</label>
+    <input type="number" id="acceleration" placeholder="Ingrese la aceleración" step="0.01">
+    <br>
+    <label for="initialVelocity2">Velocidad inicial en m/s:</label>
+    <input type="number" id="initialVelocity2" placeholder="Ingrese la velocidad inicial" step="0.01">
+    <br>
+    <label for="time2">Tiempo en s:</label>
+    <input type="number" id="time2" placeholder="Ingrese el tiempo" step="0.01">
+    <br>
+    <label for="distance2">Distancia en m:</label>
+    <input type="number" id="distance2" placeholder="Ingrese la distancia" step="0.01">
+    <br>
+    <button onclick="calculateMRUV()">Calcular</button>
+</div>
+<div id="result2" style="display: none;">
+    <h2>Resultado MRUV:</h2>
+    <p id="resultMRUV"></p>
+</div>
+
+<script>
+function handleVariableSelectMRUV() {
+    var variableSelect = document.getElementById("variableSelect2");
+    var initialVelocityInput = document.getElementById("initialVelocity2");
+    var timeInput = document.getElementById("time2");
+    var distanceInput = document.getElementById("distance2");
+    var result = document.getElementById("resultMRUV");
+
+    if (variableSelect.value === "velocidadFinal" || variableSelect.value === "distancia") {
+        initialVelocityInput.disabled = false;
+        timeInput.disabled = false;
+        distanceInput.disabled = variableSelect.value === "velocidadFinal";
+        result.innerHTML = "";
+    } else if (variableSelect.value === "velocidadInicial") {
+        initialVelocityInput.disabled = true;
+        timeInput.disabled = false;
+        distanceInput.disabled = false;
+        result.innerHTML = "";
+    } else if (variableSelect.value === "tiempo") {
+        initialVelocityInput.disabled = false;
+        timeInput.disabled = true;
+        distanceInput.disabled = false;
+        result.innerHTML = "";
+    }
+
+    if (variableSelect.value === "distancia") {
+        distanceInput.value = ""; // Borrar el valor del cuadro de texto de distancia
+        distanceInput.disabled = true;
+    } else {
+        distanceInput.disabled = false;
+    }
+}
+
+    function calculateMRUV() {
+        var variableSelect = document.getElementById("variableSelect2").value;
+        var acceleration = parseFloat(document.getElementById("acceleration").value);
+        var initialVelocity = parseFloat(document.getElementById("initialVelocity2").value);
+        var time = parseFloat(document.getElementById("time2").value);
+        var distance = parseFloat(document.getElementById("distance2").value);
+        var result = document.getElementById("resultMRUV");
+
+        if (!isNaN(acceleration)) {
+            if (variableSelect === "distancia") {
+                if (!isNaN(distance)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                // Calcula la distancia utilizando la fórmula del MRUV: d = vi * t + (1/2) * a * t^2
+                distance = initialVelocity * time + 0.5 * acceleration * Math.pow(time, 2);
+                result.innerHTML = "La distancia calculada es: " + distance.toFixed(2) + " metros.";
+                document.getElementById("distance2").disabled = true;
+            } else if (variableSelect === "velocidadFinal") {
+                if (!isNaN(distance)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                // Calcula la velocidad final utilizando la fórmula del MRUV: vf = vi + a * t
+                var finalVelocity = initialVelocity + acceleration * time;
+                result.innerHTML = "La velocidad final calculada es: " + finalVelocity.toFixed(2) + " m/s.";
+                document.getElementById("initialVelocity2").disabled = true;
+            } else if (variableSelect === "velocidadInicial") {
+                if (!isNaN(initialVelocity)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                // Calcula la velocidad inicial utilizando la fórmula del MRUV: vi = vf - a * t
+                initialVelocity = distance - acceleration * time;
+                result.innerHTML = "La velocidad inicial calculada es: " + initialVelocity.toFixed(2) + " m/s.";
+                document.getElementById("initialVelocity2").disabled = true;
+            } else if (variableSelect === "tiempo") {
+                if (!isNaN(time)) {
+                    result.innerHTML = "Por favor seleccione solo una variable a calcular.";
+                    return;
+                }
+                // Calcula el tiempo utilizando la fórmula del MRUV: t = (vf - vi) / a
+                time = (distance - initialVelocity) / acceleration;
+                result.innerHTML = "El tiempo calculado es: " + time.toFixed(2) + " segundos.";
+                document.getElementById("time2").disabled = true;
+            }
+            document.getElementById("result2").style.display = "block";
+        } else {
+            result.innerHTML = "Por favor ingrese un valor numérico para la aceleración.";
+        }
+
+        // Borrar los datos ingresados
+        document.getElementById("acceleration").value = "";
+        document.getElementById("initialVelocity2").value = "";
+        document.getElementById("time2").value = "";
+        document.getElementById("distance2").value = "";
+    }
+</script>
+
+#conversiones
+<div id="conversionSection">
+    <h2>Conversiones de unidades</h2>
+    <label for="conversionValue">Valor:</label>
+    <input type="number" id="conversionValue" placeholder="Ingrese el valor" step="0.01">
+    <br>
+    <label for="conversionSelect">Convertir de:</label>
+    <select id="conversionSelect">
+        <option value="metros">Metros</option>
+        <option value="kilometros">Kilómetros</option>
+        <option value="centimetros">Centímetros</option>
+        <option value="pies">Pies</option>
+    </select>
+    <br>
+    <label for="conversionTarget">Convertir a:</label>
+    <select id="conversionTarget">
+        <option value="metros">Metros</option>
+        <option value="kilometros">Kilómetros</option>
+        <option value="centimetros">Centímetros</option>
+        <option value="pies">Pies</option>
+    </select>
+    <br>
+    <button onclick="convertUnits()">Convertir</button>
+</div>
+<div id="resultConversion" style="display: none;">
+    <h2>Resultado de la conversión:</h2>
+    <p id="conversionResult"></p>
+</div>
+
+<script>
+    function convertUnits() {
+        var conversionValue = parseFloat(document.getElementById("conversionValue").value);
+        var conversionSelect = document.getElementById("conversionSelect").value;
+        var conversionTarget = document.getElementById("conversionTarget").value;
+        var result = document.getElementById("conversionResult");
+
+        if (!isNaN(conversionValue)) {
+            var convertedValue;
+            var conversionText;
+
+            if (conversionSelect === conversionTarget) {
+                result.innerHTML = "Las unidades de conversión seleccionadas son iguales. Por favor seleccione unidades diferentes.";
+                return;
+            }
+
+            if (conversionSelect === "metros") {
+                if (conversionTarget === "kilometros") {
+                    convertedValue = conversionValue / 1000;
+                    conversionText = "kilómetros";
+                } else if (conversionTarget === "centimetros") {
+                    convertedValue = conversionValue * 100;
+                    conversionText = "centímetros";
+                } else if (conversionTarget === "pies") {
+                    convertedValue = conversionValue * 3.281;
+                    conversionText = "pies";
+                }
+            } else if (conversionSelect === "kilometros") {
+                if (conversionTarget === "metros") {
+                    convertedValue = conversionValue * 1000;
+                    conversionText = "metros";
+                } else if (conversionTarget === "centimetros") {
+                    convertedValue = conversionValue * 100000;
+                    conversionText = "centímetros";
+                } else if (conversionTarget === "pies") {
+                    convertedValue = conversionValue * 3281;
+                    conversionText = "pies";
+                }
+            } else if (conversionSelect === "centimetros") {
+                if (conversionTarget === "metros") {
+                    convertedValue = conversionValue / 100;
+                    conversionText = "metros";
+                } else if (conversionTarget === "kilometros") {
+                    convertedValue = conversionValue / 100000;
+                    conversionText = "kilómetros";
+                } else if (conversionTarget === "pies") {
+                    convertedValue = conversionValue / 30.48;
+                    conversionText = "pies";
+                }
+            } else if (conversionSelect === "pies") {
+                if (conversionTarget === "metros") {
+                    convertedValue = conversionValue / 3.281;
+                    conversionText = "metros";
+                } else if (conversionTarget === "kilometros") {
+                    convertedValue = conversionValue / 3281;
+                    conversionText = "kilómetros";
+                } else if (conversionTarget === "centimetros") {
+                    convertedValue = conversionValue * 30.48;
+                    conversionText = "centímetros";
+                }
+            }
+
+            result.innerHTML = "Son " + convertedValue.toFixed(2) + " " + conversionText;
+
+            document.getElementById("resultConversion").style.display = "block";
+        } else {
+            result.innerHTML = "Por favor ingrese un valor numérico para la conversión.";
+        }
+
+        // Limpiar el campo de valor ingresado
+        document.getElementById("conversionValue").value = "";
+    }
+</script>
+
+
+#suma de vectores
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Suma de Vectores</h1>
+    <div id="vectoresContainer">
+        <div class="mensaje">
+            <label for="vectorInput1">Vector 1:</label>
+            <input type="text" class="vectorInput" placeholder="Ejemplo: 1,2">
+        </div>
+    </div>
+    <button onclick="agregarVector()">Agregar Vector</button>
+    <button onclick="removerVector()">Quitar Vector</button>
+    <button onclick="calcularSuma()">Calcular</button>
+    <p id="errorMessage"></p>
+    <div id="plot"></div>
+    <div id="resultado"></div>
+
+    <script>
+        var numVectores = 1;
+
+        function sumar_vectores(vectores) {
+            var suma = [0, 0];
+            for (var i = 0; i < vectores.length; i++) {
+                suma[0] += vectores[i][0];
+                suma[1] += vectores[i][1];
+            }
+            return suma;
+        }
+
+        function agregarVector() {
+            var vectoresContainer = document.getElementById('vectoresContainer');
+            var div = document.createElement('div');
+            div.className = 'mensaje';
+            div.innerHTML = '<label for="vectorInput' + (numVectores + 1) + '">Vector ' + (numVectores + 1) + ':</label>' +
+                '<input type="text" class="vectorInput" id="vectorInput' + (numVectores + 1) + '" placeholder="Ejemplo: 1,2">';
+            vectoresContainer.appendChild(div);
+            numVectores++;
+        }
+
+        function removerVector() {
+            if (numVectores > 1) {
+                var vectoresContainer = document.getElementById('vectoresContainer');
+                vectoresContainer.removeChild(vectoresContainer.lastChild);
+                numVectores--;
+            }
+        }
+
+        function obtenerVectores() {
+            var vectorInputs = document.getElementsByClassName('vectorInput');
+            var vectores = [];
+
+            for (var i = 0; i < vectorInputs.length; i++) {
+                var vectorString = vectorInputs[i].value.trim();
+                if (vectorString !== '') {
+                    var coordenadas = vectorString.split(',');
+                    if (coordenadas.length === 2) {
+                        var x = parseFloat(coordenadas[0].trim());
+                        var y = parseFloat(coordenadas[1].trim());
+                        if (!isNaN(x) && !isNaN(y)) {
+                            vectores.push([x, y]);
+                        } else {
+                            mostrarError('Los valores deben ser numéricos.');
+                            return null;
+                        }
+                    } else {
+                        mostrarError('Los vectores deben tener dos coordenadas separadas por coma.');
+                        return null;
+                    }
+                }
+            }
+
+            return vectores;
+        }
+
+        function calcularSuma() {
+            var vectores = obtenerVectores();
+
+            if (vectores !== null && vectores.length > 0) {
+                var suma = sumar_vectores(vectores);
+                mostrarError('');
+                graficar_vectores(vectores, suma);
+                mostrarResultado('La suma de los vectores es: [' + suma[0] + ', ' + suma[1] + ']');
+            }
+        }
+
+        function graficar_vectores(vectores, suma) {
+            var plotDiv = document.getElementById('plot');
+
+            var data = [];
+            var origen = [0, 0];
+            for (var i = 0; i < vectores.length; i++) {
+                var vector = vectores[i];
+                data.push({
+                    x: [origen[0], origen[0] + vector[0]],
+                    y: [origen[1], origen[1] + vector[1]],
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: 'blue' },
+                    name: 'Vector ' + (i + 1)
+                });
+                origen[0] += vector[0];
+                origen[1] += vector[1];
+            }
+
+            data.push({
+                x: [0, suma[0]],
+                y: [0, suma[1]],
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: 'red' },
+                name: 'Suma de Vectores'
+            });
+
+            var layout = {
+                title: 'Suma de Vectores',
+                xaxis: { title: 'Eje X', range: [-10, 10] },
+                yaxis: { title: 'Eje Y', range: [-10, 10] },
+                hovermode: 'closest',
+                showlegend: true
+            };
+
+            Plotly.newPlot(plotDiv, data, layout);
+        }
+
+        function mostrarError(mensaje) {
+            var errorMessage = document.getElementById('errorMessage');
+            errorMessage.innerHTML = mensaje;
+        }
+
+        function mostrarResultado(resultado) {
+            var resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
+
+#caida de cuerpos
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cálculo de la caída de cuerpos</title>
+    <script>
+        function handleVariableSelect() {
+            var variableSelect = document.getElementById('variableSelect');
+            var selectedValue = variableSelect.value;
+
+            // Deshabilitar los campos de entrada correspondientes a la opción seleccionada
+            if (selectedValue === "altura") {
+                document.getElementById('altura').disabled = true;
+            } else if (selectedValue === "tiempo") {
+                document.getElementById('tiempo').disabled = true;
+            } else if (selectedValue === "velocidad-final") {
+                document.getElementById('velocidad-final').disabled = true;
+            } else if (selectedValue === "altura-maxima") {
+                document.getElementById('altura-maxima').disabled = true;
+            } else {
+                // Habilitar todos los campos de entrada si no se selecciona ninguna opción válida
+                var inputs = document.querySelectorAll('input[type="number"]');
+                for (var i = 0; i < inputs.length; i++) {
+                    inputs[i].disabled = false;
+                }
+            }
+        }
+
+        function calcularCaida() {
+            var gravedad = parseFloat(document.getElementById('gravedad').value);
+            var tiempo = parseFloat(document.getElementById('tiempo').value);
+            var altura = parseFloat(document.getElementById('altura').value);
+            var velocidadInicial = parseFloat(document.getElementById('velocidad-inicial').value);
+            var velocidadFinal = parseFloat(document.getElementById('velocidad-final').value);
+
+            // Calcular la caída de cuerpos
+            var distanciaRecorrida = (velocidadFinal * tiempo) + (0.5 * gravedad * tiempo * tiempo);
+            var alturaFinal = altura - (velocidadInicial * tiempo) - (0.5 * gravedad * tiempo * tiempo);
+
+            // Mostrar los resultados
+            document.getElementById('resultado-distancia').innerHTML = "La distancia recorrida es: " + distanciaRecorrida.toFixed(2) + " metros";
+            document.getElementById('resultado-altura').innerHTML = "La altura final es: " + alturaFinal.toFixed(2) + " metros";
+        }
+    </script>
+</head>
+<body>
+    <h1>Cálculo de la caída de cuerpos</h1>
+    <label for="variableSelect">Variable a calcular:</label>
+    <select id="variableSelect" onchange="handleVariableSelect()">
+        <option value="altura">Altura</option>
+        <option value="tiempo">Tiempo</option>
+        <option value="velocidad-final">Velocidad Final</option>
+        <option value="altura-maxima">Altura Máxima</option>
+    </select>
+    <br>
+
+    <label for="gravedad">Gravedad:</label>
+    <input type="number" id="gravedad"><br>
+
+    <label for="tiempo">Tiempo en s:</label>
+    <input type="number" id="tiempo"><br>
+
+    <label for="altura">Altura en m:</label>
+    <input type="number" id="altura"><br>
+
+    <label for="velocidad-inicial">Velocidad Inicial en m/s:</label>
+    <input type="number" id="velocidad-inicial"><br>
+
+    <label for="velocidad-final">Velocidad Final en m/s:</label>
+    <input type="number" id="velocidad-final"><br>
+
+    <button onclick="calcularCaida()">Calcular</button>
+
+    <h2>Resultados:</h2>
+    <p id="resultado-distancia"></p>
+    <p id="resultado-altura"></p>
+</body>
+</html>
+
+
+
+
+
+#lanzamiento de proyectiles 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ecuaciones de Lanzamiento de Proyectiles</title>
+    <script>
+        var resultadoHorizontal = {}; // Objeto para almacenar los resultados del lanzamiento horizontal
+        var resultadoInclinado = {}; // Objeto para almacenar los resultados del lanzamiento inclinado
+
+        function actualizarResultado(resultado) {
+            document.getElementById("resultado_vx_horizontal").innerHTML = resultado.resultadoVx;
+            document.getElementById("resultado_vy_horizontal").innerHTML = resultado.resultadoVy;
+            document.getElementById("resultado_magnitud_velocidad").innerHTML = resultado.resultadoMagnitudVelocidad;
+            document.getElementById("resultado_direccion_velocidad").innerHTML = resultado.direccionVelocidad;
+            document.getElementById("subtitulo_desplazamiento").innerHTML = resultado.subtituloDesplazamiento;
+            document.getElementById("desplazamiento_horizontal").innerHTML = resultado.desplazamientoHorizontal;
+            document.getElementById("desplazamiento_vertical").innerHTML = resultado.desplazamientoVertical;
+            document.getElementById("desplazamiento_total").innerHTML = resultado.desplazamientoTotal;
+            document.getElementById("alcance").innerHTML = resultado.alcance;
+            document.getElementById("subtitulo_tiempo_vuelo").innerHTML = resultado.subtituloTiempoVuelo;
+            document.getElementById("subtitulo_direccion_desplazamiento").innerHTML = resultado.subtituloDireccionDesplazamiento;
+            document.getElementById("subtitulo_altura_tiempo").innerHTML = resultado.subtituloAlturaTiempo;
+            document.getElementById("altura_tiempo").innerHTML = resultado.alturaTiempo;
+        }
+
+        function lanzamientoHorizontal() {
+            var v0 = parseFloat(document.getElementById("v0_horizontal").value);
+            var h = parseFloat(document.getElementById("altura_horizontal").value);
+            var g = 9.8; // Aceleración debido a la gravedad
+
+            var vx = v0;
+            var t = Math.sqrt(2 * h / g);
+            var vy = g * t;
+            var magnitudVelocidad = Math.sqrt(vx * vx + vy * vy).toFixed(2);
+            var desplazamientoHorizontal = v0 * t;
+            var desplazamientoVertical = (g * t * t) / 2;
+            var desplazamientoTotal = Math.sqrt(desplazamientoHorizontal * desplazamientoHorizontal + desplazamientoVertical * desplazamientoVertical);
+            var alcance = vx * t;
+            var alturaTiempo = (v0 * t) - (0.5 * g * t * t);
+
+            resultadoHorizontal = {
+                resultadoVx: "Vx (Velocidad en el eje X): " + vx.toFixed(2) + " m/s",
+                resultadoVy: "Vy (Velocidad en el eje Y): " + vy.toFixed(2) + " m/s",
+                resultadoMagnitudVelocidad: "Magnitud de Velocidad: " + magnitudVelocidad + " m/s",
+                direccionVelocidad: "Dirección de la velocidad: " + (Math.atan(vy / vx) * (180 / Math.PI)).toFixed(2) + " grados",
+                subtituloDesplazamiento: "Desplazamiento:",
+                desplazamientoHorizontal: "Horizontal: " + desplazamientoHorizontal.toFixed(2) + " metros",
+                desplazamientoVertical: "Vertical: " + desplazamientoVertical.toFixed(2) + " metros",
+                desplazamientoTotal: "Desplazamiento Total: " + desplazamientoTotal.toFixed(2) + " metros",
+                alcance: "Alcance: " + alcance.toFixed(2) + " metros",
+                subtituloTiempoVuelo: "Tiempo de Vuelo: " + t.toFixed(2) + " segundos",
+                subtituloDireccionDesplazamiento: "Dirección (desplazamiento): " + (Math.atan(desplazamientoVertical / desplazamientoHorizontal) * (180 / Math.PI)).toFixed(2) + " grados",
+                subtituloAlturaTiempo: "Altura en función del tiempo:" + alturaTiempo.toFixed(2) + " metros",
+               
+            };
+
+            actualizarResultado(resultadoHorizontal);
+
+            // Reiniciar los campos de Lanzamiento Inclinado
+            document.getElementById("v0_inclinado").value = "";
+            document.getElementById("angulo_inclinado").value = "";
+        }
+    </script>
+
+</head>
+<body>
+    <h1>Ecuaciones de Lanzamiento de Proyectiles</h1>
+
+    <h3>Lanzamiento Horizontal</h3>
+    <label for="v0_horizontal">Velocidad Inicial (Vo) en m/s:</label>
+    <input type="number" id="v0_horizontal">
+    <br>
+    <label for="altura_horizontal">Altura (h) en m:</label>
+    <input type="number" id="altura_horizontal">
+    <br>
+    <button onclick="lanzamientoHorizontal()">Calcular Velocidades (X, Y)</button>
+    <br>
+    <br>
+    <h4>Resultados:</h4>
+    <h5>Velocidad:</h5>
+    <p id="resultado_vx_horizontal"></p>
+    <p id="resultado_vy_horizontal"></p>
+    <p id="resultado_magnitud_velocidad"></p>
+    <p id="resultado_direccion_velocidad"></p>
+    <br>
+    <h5 id="subtitulo_desplazamiento"></h5>
+    <p id="desplazamiento_horizontal"></p>
+    <p id="desplazamiento_vertical"></p>
+    <p id="desplazamiento_total"></p>
+    <p id="alcance"></p>
+    <h5 id="subtitulo_tiempo_vuelo"></h5>
+    <h5 id="subtitulo_direccion_desplazamiento"></h5>
+    <br>
+    <h5 id="subtitulo_altura_tiempo"></h5>
+    <p id="altura_tiempo"></p>
+</body>
+</html>
+
+
+
+#lanzamiento inclinado
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <title>Calculadora de componentes de velocidad inicial</title>
+</head>
+<body>
+    <h1>Calculadora de componentes de velocidad inicial</h1>
+    <h3>Lanzamiento Vertical</h3>
+    <form id="form">
+        <label for="v0">Velocidad inicial en m/s:</label>
+        <input type="number" id="v0" name="v0"><br><br>
+        <label for="alpha">Ángulo de proyección en grados:</label>
+        <input type="number" id="alpha" name="alpha"><br><br>
+        <input type="submit" value="Calcular"><br><br>
+    </form>
+    <p id="resultado"></p>
+
+    <script>
+        function calcular_vx(v0, alpha) {
+            let alpha_radianes = alpha * Math.PI / 180;
+            let vx = v0 * Math.cos(alpha_radianes);
+            return vx;
+        }
+
+        function calcular_vy(v0, alpha) {
+            let alpha_radianes = alpha * Math.PI / 180;
+            let vy = v0 * Math.sin(alpha_radianes);
+            return vy;
+        }
+
+        let form = document.getElementById("form");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            let v0 = document.getElementById("v0").value;
+            let alpha = document.getElementById("alpha").value;
+            let vx = calcular_vx(v0, alpha);
+            let vy = calcular_vy(v0, alpha);
+            let resultado = document.getElementById("resultado");
+            resultado.innerHTML = "Vox: " + vx + "<br>Voy: " + vy;
+        });
+    </script>
+</body>
+</html>
+
+
+#pruebas
+
+
+{% endblock %}

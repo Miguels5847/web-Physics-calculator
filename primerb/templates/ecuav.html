@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+         background-color: black;
+         font-family: Arial, sans-serif;
+         margin: 0;
+         padding: 0;
+     }
+ 
+     .container {
+         max-width: 800px;
+         margin: 0 auto;
+         padding: 40px;
+         text-align: center;
+     }
+ 
+     .block {
+         margin-bottom: 40px;
+         background-color: #333;
+         border-radius: 8px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 30px;
+         text-align: left;
+     }
+ 
+     .block h1 {
+         font-size: 28px;
+         color: #8ebf81;
+         margin-bottom: 20px;
+     }
+ 
+     .block h2 {
+         font-size: 20px;
+         color: #888888;
+         margin-bottom: 10px;
+     }
+ 
+     .block p {
+         font-size: 16px;
+         color: #cccccc;
+         line-height: 1.5;
+     }
+ </style>
+
+
+
+
+
+<style>
+    /* Estilo para centrar horizontalmente */
+    .center {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+<div class="container">
+    <div class="block center">
+        <head>
+            <title>Calculadora de componentes de velocidad inicial</title>
+        </head>
+        <body>
+            <h1 style="text-align:center; color:#4CAF50">Calculadora de componentes de velocidad inicial</h1>
+            <h2 style="text-align:center; color:#4CAF50">Lanzamiento Vertical</h2>
+            <form id="form">
+                <h3 for="v0" style="color: white;">Velocidad inicial en m/s:</h3>
+                <input type="number" id="v0" name="v0"><br><br>
+                <h3 for="alpha" style="color: white;">Ángulo de proyección (en grados):</h3>
+                <input type="number" id="alpha" name="alpha"><br><br>
+                <input type="submit" value="Calcular" style="color: black;"><br><br>
+            </form>
+            <h3 style="text-align:center; color:white" id="resultado"></h3>
+        
+            <script>
+                //se define funciones 
+                function calcular_vx(v0, alpha) {
+                    let alpha_radianes = alpha * Math.PI / 180;
+                    let vx = v0 * Math.cos(alpha_radianes);
+                    return vx;
+                }
+        
+                function calcular_vy(v0, alpha, t) {
+                    let alpha_radianes = alpha * Math.PI / 180;
+                    let g = 9.8;
+                    let vy = v0 * Math.sin(alpha_radianes) - g * t;
+                    return vy;
+                }
+        
+                function calcular_tmax(v0, alpha) {
+                    let alpha_radianes = alpha * Math.PI / 180;
+                    let g = 9.8;
+                    let tmax = 2 * v0 * Math.sin(alpha_radianes) / g;
+                    return tmax;
+                }
+        
+                function calcular_magnitud(vx, vy) {
+                    let v = Math.sqrt(vx * vx + vy * vy);
+                    return v;
+                }
+        
+                function calcular_angulo(vx, vy) {
+                    let angulo = Math.atan(vy / vx);
+                    return angulo;
+                }
+        
+                function calcular_horizontal(vx, t) {
+                    let x = vx * t;
+                    return x;
+                }
+        
+                function calcular_vertical(vy, t) {
+                    let g = 9.8;
+                    let y = vy * t - g * t^2 / 2;
+                    return y;
+                }
+        
+                function calcular_xmax(vx, tv) {
+                    let xmax = vx * tv;
+                    return xmax;
+                }
+        
+                function calcular_hmax(vy) {
+                    let g = 9.8;
+                    let hmax = vy^2 / (2 * g);
+                    return hmax;
+                }
+        //se obtiene los elemtnos depende de lo que se calcula 
+                let form = document.getElementById("form");
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    let v0 = document.getElementById("v0").value;
+                    let alpha = document.getElementById("alpha").value;
+                    let tmax = calcular_tmax(v0, alpha);
+                    let vx = calcular_vx(v0, alpha);
+                    let voy = calcular_vy(v0, alpha, tmax);
+                    let v = calcular_magnitud(vx, voy);
+                    let angulo = calcular_angulo(vx, voy);
+                    let x = calcular_horizontal(vx, tmax);
+                    let y = calcular_vertical(voy, tmax);
+                    let xmax = calcular_xmax(vx, tmax);
+                    let hmax = calcular_hmax(voy);
+                    let resultado = document.getElementById("resultado");
+                    resultado.innerHTML = "Vox: " + vx + "<br>Voy: " + voy + "<br>Tiempo máximo de vuelo: " + tmax + "<br>Componente horizontal de la velocidad: " + vx + "<br>Componente vertical de la velocidad: " + voy + "<br>Magnitud de la velocidad: " + v + "<br>Ángulo de la dirección de la velocidad: " + angulo + "<br>Posición horizontal: " + x + "<br>Posición vertical: " + y + "<br>Desplazamiento horizontal máximo: " + xmax + "<br>Altura máxima: " + hmax;
+                });
+            </script>
+        </body>
+        </html>
+
+        {% endblock %}
+
+
